@@ -123,6 +123,18 @@ var willShuffle = 0; // will use this soon
 
 			}
 			
+			
+			function probarfill(){
+									var elm = document.querySelector('audio');
+									var cur = elm.currentTime;
+									var dur = elm.duration;																					
+									var percentage = (cur/dur)*100;
+									$("#progress-filled").css('width',percentage + "%");												
+			}
+			
+			
+			
+			
 			function addSongNameClickEvent(songObj,position) {
 			 var songName = songObj.fileName; // New Variable
 				var id = '#song' + position;
@@ -155,6 +167,7 @@ time will be  updated after every 1 second*/
 			updateCurrentTime();
 			setInterval(function(){
 			updateCurrentTime();
+			probarfill();
 			},1000);
 			
 			
@@ -165,6 +178,18 @@ time will be  updated after every 1 second*/
 			});
 			};
 			
+		/*///////////////////////////////////////////////////////// added classsssss to backward song code /////////////////////////////////////////////////	
+			$('.fa-step-backward').on('click',function() {
+			if (current-duration===duration){}
+			else
+			x =	current-duration;
+			y = duration;
+			for(x<y;x=y){	
+			timejump();
+			}
+			}
+			
+			///////////////////////////////////////////////////////////////   endding   ////////////////////////////////////////////////////////////////*/
 			$('.fa-repeat').on('click',function() {
          $('.fa-repeat').toggleClass('disabled');
         willLoop = 1 - willLoop;
@@ -290,7 +315,7 @@ setInterval makes it run again*/
 
 
 
-		/*////////////////////////////////////////////////////////////////////// vegas setup/////////////////////////////////////
+		////////////////////////////////////////////////////////////////////// vegas setup/////////////////////////////////////
 
 
 
@@ -302,41 +327,82 @@ setInterval makes it run again*/
 				
 			$(function() {
   $.vegas({
-    src:'/images/background.jpg'
+    src:'img/b11.jpg'
   })('overlay', {
-    src:'/vegas/overlays/13.png'
+    src:'vegas/overlays/13.png'
   });
 });
 
 
 
-			
 
 
 
 
 
+$.vegas('slideshow', {
+backgrounds:[
+{ src:'img/b11.jpg' },
+{ src:'img/song2.jpg' },
+{ src:'img/song3.jpg' }
+]
+})('overlay');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-		$.vegas.defaults = {
+	$.vegas.defaults ={
   background: {
     src:         null, // defined by Css
     align:       'center',
     valign:      'center',
     fade:        0,
-    loading      true,
+    loading:      true,
+    load:        function(){},
+    complete:    function(){}
+	},
+  slideshow: {
+    step:        0,
+    delay:       5000,
+    backgrounds: [],
+    preload:     true,
+    walk:        function(){}
+  },
+  overlay: {
+    src:         "vegas/jquery.vegas.css", // defined by Css 
+    opacity:     null  // defined by Css 
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// its vegas plugin//////////////////////////////////////////////////////////////////////////*/	
+/*	$(function() {
+  $.vegas({
+    src:'img/b11.jpg'
+  });
+  $.vegas('overlay', {
+    src:'vegas/overlays/13.png'
+  });
+});			
+			
+
+
+$.vegas.defaults = {
+  background: {
+    src:         null, // defined by Css
+    align:       'center',
+    valign:      'center',
+    fade:        0,
+    loading:      true,
     load:        function(){},
     complete:    function(){}
   },
@@ -351,37 +417,5 @@ setInterval makes it run again*/
     src:         null, // defined by Css 
     opacity:     null  // defined by Css 
   }
-}
-
-
-
-
-
-
-
-$.vegas('slideshow', {
-backgrounds:[
-{ src:'/img/background1.jpg' },
-{ src:'/img/background2.jpg' },
-{ src:'/img/background3.jpg' }
-]
-})('overlay');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// its vegas plugin//////////////////////////////////////////////////////////////////////////*/	
-				
-				
+} */
+			

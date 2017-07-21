@@ -8,6 +8,7 @@
 
 html,
 body {
+
     height: 100%;
     width: 100%;
     border: 0;
@@ -217,3 +218,8 @@ table.dataTable tbody tr {
 .fa.disabled {
     color: gray;
 }
+
+#progress-filled {
+    background-color: #959595;
+    height: 8px;
+    border-radius: 4px;
