@@ -329,7 +329,7 @@ setInterval makes it run again*/
   $.vegas({
     src:'img/b11.jpg'
   })('overlay', {
-    src:'vegas/overlays/13.png'
+    src:'img/background.jpg'
   });
 });
 
@@ -343,8 +343,8 @@ setInterval makes it run again*/
 $.vegas('slideshow', {
 backgrounds:[
 { src:'img/b11.jpg' },
-{ src:'img/song2.jpg' },
-{ src:'img/song3.jpg' }
+{ src:'img/b12.jpg' },
+{ src:'img/b13.jpg' }
 ]
 })('overlay');
 
@@ -352,10 +352,10 @@ backgrounds:[
 
 	$.vegas.defaults ={
   background: {
-    src:         null, // defined by Css
+    src:        null, // defined by Css
     align:       'center',
     valign:      'center',
-    fade:        0,
+    fade:        0.5,
     loading:      true,
     load:        function(){},
     complete:    function(){}
@@ -363,15 +363,17 @@ backgrounds:[
   slideshow: {
     step:        0,
     delay:       5000,
-    backgrounds: [],
+    backgrounds: [{ src:'img/b11.jpg' },
+					{ src:'img/b12.jpg' },
+					{ src:'img/b13.jpg' }],
     preload:     true,
     walk:        function(){}
   },
   overlay: {
-    src:         "vegas/jquery.vegas.css", // defined by Css 
+    src:         null, // defined by Css 
     opacity:     null  // defined by Css 
   }
-}
+};
 
 
 

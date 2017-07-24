@@ -25,6 +25,7 @@ h1 {
     height: 100%;
     width: 100%;
     background-color: #BBB;
+	
 }
 
 .welcome-screen {
@@ -219,7 +220,6 @@ table.dataTable tbody tr {
     color: gray;
 }
 
-#progress-filled {
-    background-color: #959595;
-    height: 8px;
-    border-radius: 4px;
+
+.vegas-background{
+	z-index: 2; }
