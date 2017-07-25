@@ -220,6 +220,10 @@ table.dataTable tbody tr {
     color: gray;
 }
 
+.overlay{
+	opacity:0.5;
+}
 
-.vegas-background{
-	z-index: 2; }
+.slideshow{
+	opacity:1;
+}

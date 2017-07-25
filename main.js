@@ -76,8 +76,6 @@ var willShuffle = 0; // will use this soon
     ret += "" + secs;
     return ret;
 }
-	
-	
 	/*Humne ek function bnaya, 
 	usme code likha,ab jab  bi humein same code ki jarurat kahin pdegi
 	to hum sidhe function ko call krenge*/
@@ -89,15 +87,17 @@ var willShuffle = 0; // will use this soon
 		console.log('Playing');
 		$('.play-icon').removeClass('fa-play').addClass('fa-pause');
 		song.play();
+		$('.content').addClass('hidden');//////// speciall line to work////////////////////////////
+		$('header').addClass('hidden');
 		
 
-		
-			
 		}
 		else {
 		console.log('Pausing');
 		$('.play-icon').removeClass('fa-pause').addClass('fa-play');
 		song.pause();
+		$('.content').removeClass('hidden');//////// speciall line to work////////////////////////////
+		$('header').removeClass('hidden');
 		}
 		}
 		
@@ -285,7 +285,9 @@ setInterval makes it run again*/
 	
     $('.play-icon').on('click', function() {
         toggleSong(); 
-    });
+		
+		
+	});
 	
 	/*jQuery ne puri body pe keypress event lgaya
 	jis se ab space dbane pe bhi gana play or 
@@ -304,27 +306,10 @@ setInterval makes it run again*/
 				toggleSong();
 			}
 				});	
-
-
-
-
-
-
-
-
-
-
-
-		////////////////////////////////////////////////////////////////////// vegas setup/////////////////////////////////////
-
-
-
-
-
-
-
-				
-				
+		////////////////////////////////////////////////////////////////////// vegas setup////////////////////////////////////
+		
+		
+		
 			$(function() {
   $.vegas({
     src:'img/b11.jpg'
@@ -371,12 +356,20 @@ backgrounds:[
   },
   overlay: {
     src:         null, // defined by Css 
-    opacity:     null  // defined by Css 
+    opacity:     1  // defined by Css 
   }
 };
 
 
 
+/*
+$('#carousel-example-generic').on('slide.bs.carousel', function(e) {
+      if(e.relatedTarget.id == 'firstSlide'){
+          $("#landingContainer").css('background-color', 'orange');
+      } else if(e.relatedTarget.id == 'secondSlide'){
+          $("#landingContainer").css('background-color', 'green');
+      }
+})*/
 
 
 
@@ -386,38 +379,32 @@ backgrounds:[
 
 
 
-// its vegas plugin//////////////////////////////////////////////////////////////////////////*/	
-/*	$(function() {
-  $.vegas({
-    src:'img/b11.jpg'
-  });
-  $.vegas('overlay', {
-    src:'vegas/overlays/13.png'
-  });
-});			
-			
+/*
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 3</div>
+  <img src="b11.jpg" style="width:100%">
+  <div class="text">Caption Text</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 3</div>
+  <img src="b12.jpg" style="width:100%">
+  <div class="text">Caption Two</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 3</div>
+  <img src="b13.jpg" style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+/*
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>*/
 
 
-$.vegas.defaults = {
-  background: {
-    src:         null, // defined by Css
-    align:       'center',
-    valign:      'center',
-    fade:        0,
-    loading:      true,
-    load:        function(){},
-    complete:    function(){}
-  },
-  slideshow: {
-    step:        0,
-    delay:       5000,
-    backgrounds: [],
-    preload:     false,
-    walk:        function(){}
-  },
-  overlay: {
-    src:         null, // defined by Css 
-    opacity:     null  // defined by Css 
-  }
-} */
-			
+
+
