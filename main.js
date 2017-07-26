@@ -424,8 +424,6 @@ $('audio').on('ended',function() {
 			$(function() {
   $.vegas({
     src:'img/b11.jpg'
-  })('overlay', {
-    src:''
   });
 });
 
@@ -446,7 +444,7 @@ backgrounds:[
 { src:'img/b18.jpg' },
 { src:'img/b19.jpg' }
 ]
-})('overlay');
+});
 
 
 
