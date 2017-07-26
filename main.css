@@ -165,7 +165,7 @@
 		}
 
 		.song-list .song:hover {
-			background-color: #282828;
+			background-color: #1F1F1F;
 		}
 
 
@@ -243,8 +243,8 @@
 		}
 
 		.song:hover{
-			color: #880E4F;
-			background-color:#BCAAA4;
+			color: #FFFFFF;
+			background-color:#1F1F1F;
 		}
 
 		}

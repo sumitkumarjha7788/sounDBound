@@ -432,10 +432,19 @@ $('audio').on('ended',function() {
 
 $.vegas('slideshow', {
 backgrounds:[
+{ src:'img/b07.jpg' },
+{ src:'img/b08.jpg' },
+{ src:'img/b09.jpg' },
+{ src:'img/b10.jpg' },
 { src:'img/b11.jpg' },
 { src:'img/b12.jpg' },
 { src:'img/b13.jpg' },
-{ src:'img/background.jpg' }
+{ src:'img/b14.jpg' },
+{ src:'img/b15.jpg' },
+{ src:'img/b16.jpg' },
+{ src:'img/b17.jpg' },
+{ src:'img/b18.jpg' },
+{ src:'img/b19.jpg' }
 ]
 })('overlay');
 
@@ -446,7 +455,7 @@ backgrounds:[
     src:        null, // defined by Css
     align:       'center',
     valign:      'center',
-    fade:        0.3,
+    fade:        0.5,
     loading:      true,
     load:        function(){},
     complete:    function(){}
