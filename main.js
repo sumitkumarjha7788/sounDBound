@@ -13,7 +13,8 @@ var willShuffle = 0; // will use this soon
         'album': 'Badrinath ki Dulhania',
         'duration': '2:56',
        'fileName': 'song1.mp3',
-	   		'image': 'song1.jpg'
+	   		'image': 'song1.jpg',
+        'backgrounds':['song1bg1.jpg','song1bg2.jpg','song1bg3.jpg']
     },
     {
         'name': 'Humma Song',
@@ -21,7 +22,8 @@ var willShuffle = 0; // will use this soon
         'album': 'Ok Jaanu',
         'duration': '3:15',
         'fileName': 'song2.mp3',
-		'image': 'song2.jpg'
+		'image': 'song2.jpg',
+    'backgrounds':['song2bg1.jpg','song2bg2.jpg','song2bg3.jpg']
     },
     {
         'name': 'Nashe Si Chadh Gayi',
@@ -29,7 +31,8 @@ var willShuffle = 0; // will use this soon
         'album': 'Befikre',
         'duration': '2:34',
         'fileName': 'song3.mp3',
-		'image': 'song3.jpg'
+		'image': 'song3.jpg',
+    'backgrounds':['song3bg1.jpg','song3bg2.jpg','song3bg3.jpg']
     },
     {
         'name': 'The Breakup Song',
@@ -37,7 +40,8 @@ var willShuffle = 0; // will use this soon
         'album': 'Ae Dil Hai Mushkil',
         'duration': '2:29',
         'fileName': 'song4.mp3',
-		'image': 'song4.jpg'
+		'image': 'song4.jpg',
+    'backgrounds':['song4bg1.jpg','song4bg2.jpg','song4bg3.jpg']
     },
 	{
         'name': 'Tu jo mila',
@@ -45,7 +49,8 @@ var willShuffle = 0; // will use this soon
         'album': 'Bajrangi Bhaijaan',
         'duration': '4:04',
         'fileName': 'song5.mp3',
-		'image': 'song5.jpg'
+		'image': 'song5.jpg',
+    'backgrounds':['song5bg1.jpg','song5bg2.jpg','song5bg3.jpg']
     },
 	{
         'name': 'Ishq Mubarak',
@@ -53,13 +58,14 @@ var willShuffle = 0; // will use this soon
         'album': 'Tum Bin 2',
         'duration': '4:57',
         'fileName': 'song6.mp3',
-		'image': 'song6.jpg'
+		'image': 'song6.jpg',
+    'backgrounds':['song6bg1.jpg','song6bg2.jpg','song6bg3.jpg']
     }];
 
 
 
 	function fancyTimeFormat(time)
-{   
+{
     // Hours, minutes and seconds
     var hrs = ~~(time / 3600);
     var mins = ~~((time % 3600) / 60);
@@ -76,260 +82,360 @@ var willShuffle = 0; // will use this soon
     ret += "" + secs;
     return ret;
 }
-	/*Humne ek function bnaya, 
+
+/*Humne ek function bnaya, 
 	usme code likha,ab jab  bi humein same code ki jarurat kahin pdegi
 	to hum sidhe function ko call krenge*/
-	function toggleSong() {
-		var song = document.querySelector('audio');
-		//== will compare the both sides
-		if(song.paused === true) {
-		//console also used to debug the code
-		console.log('Playing');
-		$('.play-icon').removeClass('fa-play').addClass('fa-pause');
-		song.play();
-		$('.content').addClass('hidden');//////// speciall line to work////////////////////////////
-		$('header').addClass('hidden');
-		
+		// variable declaration
+					var currentSongNumber = 1;
+					var willLoop = 0;
+					var willShuffle = 0; 
+					
+                   //volume control 
+					function setvolume(){
+						var song =document.querySelector('audio');
+						song.volume =slider.value/100;
+					
+						
+					}
+					
+					//Toggle function is added
+			function toggleSong() {
+			var song = document.querySelector('audio');
+			if(song.paused == true) {
+			console.log('Playing');
+			$('.play-icon').removeClass('fa-play').addClass('fa-pause');
+			song.play();
+			
+			
+			}
+			else {
+			console.log('Pausing');
+			$('.play-icon').removeClass('fa-pause').addClass('fa-play');
+			song.pause();
+			}
+			}
+			
+			
+	
+	//Time format changes fromm seconds to minutes
+			function fancyTimeFormat(time)
+			{   
+			// Hours, minutes and seconds
+			var hrs = ~~(time / 3600);
+			var mins = ~~((time % 3600) / 60);
+			var secs = time % 60;
 
-		}
-		else {
-		console.log('Pausing');
-		$('.play-icon').removeClass('fa-pause').addClass('fa-play');
-		song.pause();
-		$('.content').removeClass('hidden');//////// speciall line to work////////////////////////////
-		$('header').removeClass('hidden');
-		}
-		}
+			// Output like "1:01" or "4:03:59" or "123:03:59"
+			var ret = "";
+
+			if (hrs > 0) {
+				ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+			}
+
+			ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+			ret += "" + secs;
+			return ret;
+			}
 		
-		function changeCurrentSongDetails(songObj) {
+		//code for slider
+			 function updateTimer(){
+		var song = document.querySelector('audio');
+		var ct = song.currentTime;
+		var td = song.duration;
+		var percentage = (ct/td)*100;
+		$('.progress-filled').css('width', percentage+ "%");
+	}
+			
+			// changes details of song 
+			function changeCurrentSongDetails(songObj) {
     $('.current-song-image').attr('src','img/' + songObj.image);
     $('.current-song-name').text(songObj.name);
     $('.current-song-album').text(songObj.album);
-		}
-		function updateCurrentTime() {
-			var song = document.querySelector('audio');
-			//console.log(song.currentTime);
-			//console.log(song.duration);
-			var currentTime = Math.floor(song.currentTime);
-			/*we call the function called 'fancyTimeFormat'
-			We pass it the currentTime
-			Whatever value it returns,
-			we catch it in the same variable*/
-			currentTime = fancyTimeFormat(currentTime);
-			var duration = Math.floor(song.duration);
-			duration = fancyTimeFormat(duration);
-			$('.time-elapsed').text(currentTime);
-			$('.song-duration').text(duration);
+	
+}
 
-			}
+   
+     function timeJump() {
+    var song = document.querySelector('audio');
+    song.currentTime = song.duration - 5;
+     }
+	 
+	
 			
-			
-			function probarfill(){
-									var elm = document.querySelector('audio');
-									var cur = elm.currentTime;
-									var dur = elm.duration;																					
-									var percentage = (cur/dur)*100;
-									$("#progress-filled").css('width',percentage + "%");												
-			}
-			
-			
-			
-			
-			function addSongNameClickEvent(songObj,position) {
-			 var songName = songObj.fileName; // New Variable
-				var id = '#song' + position;
+				
+	//time elapsed and song duration ko show krna
+				function updateCurrentTime() {
+				var song = document.querySelector('audio');
+				//console.log(song.currentTime);
+				//console.log(song.duration);
+				var currentTime =Math.floor(song.currentTime);
+				currentTime = fancyTimeFormat(currentTime);
+				var duration = Math.floor(song.duration);
+				duration = fancyTimeFormat(duration);
+				$('.time-elapsed').text(currentTime);
+				$('.song-duration').text(duration);
+				}
+				
+				
+				function addSongNameClickEvent(songObj,position) {
+					var id ="#song" + position;
+					var songName = songObj.fileName; 
 			$(id).click(function() {
+					currentSongNumber = (position);
 			var audio = document.querySelector('audio');
 			var currentSong = audio.src;
-			if(currentSong.search(songName) !== -1)
+			if(currentSong.search(songName) != -1)
 			{
 			toggleSong();
 			}
 			else {
 			audio.src = songName;
 			toggleSong();
-			  changeCurrentSongDetails(songObj); // Function Call
+			 changeCurrentSongDetails(songObj); // Function Call
 			}
-			
 			});
 			}
 			
-
-
-
-/*This means, 1. Wait for the website to load
-2. Once it has loaded, run everything that is in the function
-time will be  updated after every 1 second*/
-			window.onload = function() {
-
-			changeCurrentSongDetails(songs[1]);
-			
-			updateCurrentTime();
-			setInterval(function(){
-			updateCurrentTime();
-			probarfill();
-			},1000);
-			
-			
-			
-			
-			$('#songs').DataTable({
-        paging: false
-			});
-			};
-			
-		/*///////////////////////////////////////////////////////// added classsssss to backward song code /////////////////////////////////////////////////	
-			$('.fa-step-backward').on('click',function() {
-			if (current-duration===duration){}
-			else
-			x =	current-duration;
-			y = duration;
-			for(x<y;x=y){	
-			timejump();
-			}
-			}
-			
-			///////////////////////////////////////////////////////////////   endding   ////////////////////////////////////////////////////////////////*/
-			$('.fa-repeat').on('click',function() {
-         $('.fa-repeat').toggleClass('disabled');
-        willLoop = 1 - willLoop;
-            });
-			
-			$('.fa-random').on('click',function() {
-         $('.fa-random').toggleClass('disabled');
-         willShuffle = 1 - willShuffle;
-           });
-		   
-		   function timeJump() {
-    var song = document.querySelector('audio');
-    song.currentTime = song.duration - 5;
+			 function randomExcluded(min, max, excluded) {
+    var n = Math.floor(Math.random() * (max-min) + min);
+    if (n >= excluded) n++;
+    return n;
 }
-		   
-		   
-		  $('audio').on('ended',function() {
+	
+				//main screen settings
+				window.onload = function() {
+					
+			  changeCurrentSongDetails(songs[0]);
+				updateCurrentTime();
+				setInterval(function(){
+				updateCurrentTime();
+				updateTimer();
+				},1000);
+				//var songName1 = 'Tamma Song';
+				//var songName2 = 'Humma Song';
+				//var songName3 = 'Nashe Si Chadh Gayi';
+				//var songName4 = 'The Breakup Song';
+				// declaration of array
+			 
+				 // var albumList = ['Badrinath ki Dulhania','Ok Jaanu','Befikre','Ae Dil Hai Mushkil'];
+					//var durationList = ['2:56','3:15','2:34','2:29'];
+					
+                 //playlist ke liye loop use kiya
+				 for(var i =0; i < songs.length;i++) {
+					var Obj = songs[i];
+					var name = '#song' + (i+1);
+					var song = $(name);
+					song.find('.song-name').text(Obj.name);
+					song.find('.song-artist').text(Obj.artist);
+					song.find('.song-album').text(Obj.album);
+					song.find('.song-length').text(Obj.duration);
+					addSongNameClickEvent(Obj,i+1)
+				}
+				
+					//addSongNameClickEvent(fileNames[0],1);
+					//addSongNameClickEvent(fileNames[1],2);
+					//addSongNameClickEvent(fileNames[2],3);
+					//addSongNameClickEvent(fileNames[3],4);
+					
+					//for (var i = 0; i < fileNames.length ; i++) {
+						//addSongNameClickEvent(fileNames[i],i)
+					//} 
+					$('#songs').DataTable({
+        paging: false
+    });
+					
+				}
+				
+		
+	//settings of welcome-screen and main-screen
+    $('.welcome-screen button').on('click', function() {
+        var name = $('#name-input').val();
+        if (name.length > 2) {
+            var message = "Welcome, " + name;
+            $('.main .user-name').text(message);
+            $('.welcome-screen').addClass('hidden');
+            $('.main').removeClass('hidden');
+        } else {
+            $('#name-input').addClass('error');
+        }
+    });
+	
+	//click function added
+    $('.play-icon').on('click', function() {
+       toggleSong();
+    });
+	
+	//keypress function added
+    $('body').on('keypress',function(event) {
+    var target = event.target;
+    if (event.keyCode == 32 && target.tagName !='INPUT')
+    {
+        toggleSong();
+    }
+});
+
+      
+        changeCurrentSongDetails(songs[0]); // Update Image
+       // currentSongNumber = currentSongNumber + 1; // Change State
+    //loop is added
+		  $('.fa-repeat').on('click',function() {
+			$('.fa-repeat').toggleClass('disabled');
+			willLoop = 1 - willLoop;
+		});
+     //shuffle is added
+		$('.fa-random').on('click',function() {
+			$('.fa-random').toggleClass('disabled');
+			willShuffle = 1 - willShuffle;
+		});
+	//mousemove function added to volume control	
+		$('#slider').on('mousemove',function()
+		{
+			setvolume();
+			
+		});
+	//click function added to volume control	
+		$('#slider').on('click',function()
+		{
+			setvolume();
+			
+		});
+
+$('audio').on('ended',function() {
     var audio = document.querySelector('audio');
-    if(currentSongNumber < 4) {
+     if (willShuffle == 1) {
+         var nextSongNumber = randomExcluded(1,4,currentSongNumber); // Calling our function from Stackoverflow
+         var nextSongObj = songs[nextSongNumber-1];
+         audio.src = nextSongObj.fileName;
+         toggleSong();
+         changeCurrentSongDetails(nextSongObj);
+         currentSongNumber = nextSongNumber;
+     }
+    else if(currentSongNumber < 4) {
         var nextSongObj = songs[currentSongNumber];
+		console.log(currentSongNumber);
         audio.src = nextSongObj.fileName;
         toggleSong();
         changeCurrentSongDetails(nextSongObj);
         currentSongNumber = currentSongNumber + 1;
     }
-    else if(willLoop === 1) {
+    else if(willLoop == 1) {
+		
         var nextSongObj = songs[0];
         audio.src = nextSongObj.fileName;
         toggleSong();
         changeCurrentSongDetails(nextSongObj);
-        currentSongNumber =  1;
+        currentSongNumber = 1;
     }
     else {
         $('.play-icon').removeClass('fa-pause').addClass('fa-play');
         audio.currentTime = 0;
     }
-});
+		});
 
-var nextSongNumber = randomExcluded(1,4,currentSongNumber);
-function randomExcluded(min, max, excluded) {
-    var n = Math.floor(Math.random() * (max-min) + min);
-    if (n >= excluded) n++;
-    return n;
-}
+//variable declaration
+		  var Playingnumber = 0  ;
+		var shuffle=0;
+		var equal = 0;
 
 
 
 
+		function changeSong() 
+		{
+		var music =  songs[Playingnumber].fileName;
+		var song = document.querySelector("audio");
+		song.src = music;
+		toggleSong();
+		changeCurrentSongDetails(songs[Playingnumber])
+		}
 
-/* as soon as our website is loaded, 
-updateCurrentTime runs and 
-then after every 1 second, 
-setInterval makes it run again*/
-			
 
-    for(var i =0; i < songs.length;i++) {
-        var obj = songs[i];
-        var name = '#song' + (i+1);
-        var song = $(name);
-        song.find('.song-name').text(obj.name);
-        song.find('.song-artist').text(obj.artist);
-        song.find('.song-album').text(obj.album);
-        song.find('.song-length').text(obj.duration);
-       addSongNameClickEvent(obj,i+1);
-    }
-			
-			
-			
 
-	/* jquery ne kisi tag ki welcome-screen
-	ke andar kisi button class ko dhundha aur uspe on click 
-	function lgaya mtlb click krne pe kuch hoga*/
-		$('.welcome-screen button').on('click', function() {
-	/*jquery ne kisi id name-input ki value ek message 
-	naam ke variable me store kar di*/
-        var name = $('#name-input').val();
-	/*agr name ki length 2 se jada hai
-	tab ek message show hoga welcome "name"*/
-        if (name.length > 2) {
-            var message = "Welcome, " + name; 
-			$('.main .user-name').text(message);
-	/*jquery ne kisi main class me user-name class 
-	ke text me message ki value daal di*/
-            $('.welcome-screen').addClass('hidden');
-            $('.main').removeClass('hidden');
-        } else {
-	/*agr name ki length 2 se kam hai to
-	input pe ek red color ka border aa jayega mtlb error*/
-            $('#name-input').addClass('error');
-        }
-    });
-	
-	
-    $('.play-icon').on('click', function() {
-        toggleSong(); 
-		
-		
-	});
-	
-	/*jQuery ne puri body pe keypress event lgaya
-	jis se ab space dbane pe bhi gana play or 
-	pause ho skta hai*/
-        /* $('body').on('keypress', function(event) {
-	//keycode of space bar in javascript is 32
-                if (event.keyCode == 32) {
-                  toggleSong();   
-				  
-            }
-			}); */
-		$('body').on('keypress',function(event) {
-			var target = event.target;
-			if (event.keyCode === 32 && target.tagName !=='INPUT')
+
+        // forward the song
+
+			$(".fa-step-forward").click(function(){
+
+			if(shuffle==1)
 			{
-				toggleSong();
+			var audio = document.querySelector('audio');
+			var nextSongNumber = randomExcluded(0,3,Playingnumber); // Calling our function from Stackoverflow
+
+			var nextSongObj = songs[nextSongNumber];
+			audio.src = nextSongobj.fileName;
+			toggleSong();
+			changeCurrentSongDetails(nextSongobj);
+			Playingnumber = nextSongNumber;
+
+
 			}
-				});	
-		////////////////////////////////////////////////////////////////////// vegas setup////////////////////////////////////
-		
-		
-		
+
+
+			else {
+
+			if(Playingnumber == songs.length-1){
+			Playingnumber = 0;
+			changeSong();
+			}
+
+			else {
+			console.log("two");
+			console.log(Playingnumber);
+			Playingnumber++;
+			changeSong();
+			}
+
+			}
+
+			})
+
+
+
+          //backward the song
+			$(".fa-step-backward").click(function(){
+
+			if(Playingnumber == 0){
+			console.log("one");
+			Playingnumber = (songs.length-1);
+			changeSong();
+
+
+
+
+			}
+
+			else {
+			console.log("two");
+			console.log(Playingnumber);
+			Playingnumber--;
+			changeSong();
+			}
+
+
+
+
+			})
+
+
+
+		////////////////////////////////////////////////////////////////////// vegas setup////////////////////////////////////				
+				
 			$(function() {
   $.vegas({
     src:'img/b11.jpg'
   })('overlay', {
-    src:'img/background.jpg'
+    src:''
   });
 });
-
-
-
-
-
-
 
 
 $.vegas('slideshow', {
 backgrounds:[
 { src:'img/b11.jpg' },
 { src:'img/b12.jpg' },
-{ src:'img/b13.jpg' }
+{ src:'img/b13.jpg' },
+{ src:'img/background.jpg' }
 ]
 })('overlay');
 
@@ -340,7 +446,7 @@ backgrounds:[
     src:        null, // defined by Css
     align:       'center',
     valign:      'center',
-    fade:        0.5,
+    fade:        0.3,
     loading:      true,
     load:        function(){},
     complete:    function(){}
@@ -351,60 +457,11 @@ backgrounds:[
     backgrounds: [{ src:'img/b11.jpg' },
 					{ src:'img/b12.jpg' },
 					{ src:'img/b13.jpg' }],
-    preload:     true,
+    preload:     false,
     walk:        function(){}
   },
   overlay: {
     src:         null, // defined by Css 
-    opacity:     1  // defined by Css 
+    opacity:     null  // defined by Css 
   }
 };
-
-
-
-/*
-$('#carousel-example-generic').on('slide.bs.carousel', function(e) {
-      if(e.relatedTarget.id == 'firstSlide'){
-          $("#landingContainer").css('background-color', 'orange');
-      } else if(e.relatedTarget.id == 'secondSlide'){
-          $("#landingContainer").css('background-color', 'green');
-      }
-})*/
-
-
-
-
-
-
-
-
-
-/*
-<div class="slideshow-container">
-
-<div class="mySlides fade">
-  <div class="numbertext">1 / 3</div>
-  <img src="b11.jpg" style="width:100%">
-  <div class="text">Caption Text</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">2 / 3</div>
-  <img src="b12.jpg" style="width:100%">
-  <div class="text">Caption Two</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 3</div>
-  <img src="b13.jpg" style="width:100%">
-  <div class="text">Caption Three</div>
-</div>
-/*
-<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-<a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-</div>*/
-
-
-
-
